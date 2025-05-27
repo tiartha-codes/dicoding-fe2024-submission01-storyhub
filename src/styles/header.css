@@ -1,0 +1,78 @@
+/* Header */
+header {
+    background-color: #ffffff; /* Warna putih bersih */
+    border-bottom: 1px solid #e0e0e0; /* Garis bawah tipis */
+    padding: 10px 20px; /* Padding untuk ruang di dalam header */
+    position: sticky; /* Tetap di atas saat scroll */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan lembut */
+  }
+  
+  /* Kontainer utama header */
+  .main-header {
+    display: flex;
+    justify-content: space-between; /* Elemen di kiri dan kanan */
+    align-items: center; /* Vertikal rata tengah */
+    max-width: 1200px;
+    margin: 0 auto; /* Tengah secara horizontal */
+    padding: 0 20px;
+  }
+  
+  /* Brand name (logo atau nama aplikasi) */
+  .brand-name {
+    font-size: 1.5rem; /* Ukuran font besar */
+    font-weight: bold;
+    color: #1a73e8; /* Warna biru khas Google */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Navigasi */
+  .navigation-drawer {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Jarak antar item menu */
+    background-color: transparent;
+    box-shadow: none;
+    transform: translateX(0);
+    position: static;
+    width: auto;
+    padding: 0;
+  }
+  
+  /* Menu navigasi */
+  #navlist-main,
+  #navlist {
+    list-style: none; /* Hilangkan bullet point */
+    display: flex; /* Tampilkan elemen secara horizontal */
+    gap: 20px; /* Jarak antar item */
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Item menu */
+  #navlist-main li a,
+  #navlist li a {
+    text-decoration: none; /* Hilangkan garis bawah */
+    color: #5f6368; /* Warna teks abu-abu */
+    font-size: 0.875rem; /* Ukuran font kecil */
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  #navlist-main li a:hover,
+  #navlist li a:hover {
+    background-color: #f1f3f4; /* Warna latar abu-abu terang saat hover */
+    color: #202124; /* Warna teks lebih gelap */
+  }
+
+  
+  /* Tombol drawer (untuk layar kecil) */
+  .drawer-button {
+    display: none; /* Sembunyikan di layar besar */
+  }

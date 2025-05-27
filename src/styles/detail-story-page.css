@@ -1,0 +1,84 @@
+/* detail-story-page.css */
+
+.detail-story-page {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f2f5; /* Mirip background Facebook */
+    min-height: 100vh;
+}
+
+.detail-story-page > h1 {
+    color: #1877f2; /* Warna biru Facebook */
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    font-weight: bold;
+}
+
+#story-detail-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.story-detail img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.story-detail .story-info {
+    padding: 15px;
+}
+
+.story-detail .story-info h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.story-detail .story-description {
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.story-detail .story-date,
+.story-detail .story-location {
+    color: #999;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.btn.secondary {
+    background-color: #ddd;
+    color: #333;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn.secondary:hover {
+    background-color: #ccc;
+}
+
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 10px;
+}

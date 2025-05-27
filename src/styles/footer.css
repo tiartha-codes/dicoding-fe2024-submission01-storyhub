@@ -1,0 +1,52 @@
+/* style.css */
+
+footer {
+    background-color: #f2f2f2; /* Warna latar belakang abu-abu muda seperti Google */
+    padding: 15px 20px;
+    border-top: 1px solid #e4e4e4; /* Garis pemisah tipis */
+    font-size: 0.8rem;
+    color: #70757a; /* Warna teks abu-abu seperti Google */
+    display: flex;
+    justify-content: center; /* Pusatkan konten footer secara horizontal */
+    align-items: center; /* Pusatkan konten footer secara vertikal */
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column; /* Susun link dan lokasi secara vertikal pada layar kecil */
+    align-items: center; /* Pusatkan item di dalam footer-content */
+    width: 100%;
+    max-width: 1200px; /* Lebar maksimum konten footer */
+}
+
+.footer-links {
+    display: flex;
+    gap: 15px; /* Jarak antar link */
+    margin-bottom: 10px; /* Beri jarak dengan lokasi */
+}
+
+.footer-links a {
+    color: #70757a;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline; /* Efek hover underline */
+}
+
+.footer-location {
+    color: #70757a;
+}
+
+/* Responsive design untuk layar yang lebih kecil */
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row; /* Susun link dan lokasi secara horizontal pada layar besar */
+        justify-content: space-between; /* Beri ruang di antara link dan lokasi */
+        align-items: center;
+    }
+
+    .footer-links {
+        margin-bottom: 0; /* Hilangkan margin bawah pada layar besar */
+    }
+}
