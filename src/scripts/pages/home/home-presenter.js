@@ -24,11 +24,11 @@ class HomePresenter {
             if (!response.error) {
                 this.#view.showStories(response.listStory);
             } else {
-                this.#view.showErrorStories(response.message || 'Gagal memuat kisah terbaru.');
+                this.#view.showErrorStories(response.message || 'Gagal memuat Story terbaru.');
             }
         } catch (error) {
             console.error('HomePresenter: Terjadi kesalahan saat memuat stories:', error);
-            this.#view.showErrorStories('Terjadi kesalahan saat memuat kisah terbaru.');
+            this.#view.showErrorStories('Terjadi kesalahan saat memuat Story terbaru.');
         }
     }
 
@@ -63,7 +63,7 @@ class HomePresenter {
             const response = await this.#model.addNewStory(formData);
 
             if (!response.error) {
-                this.#view.showMessage('Kisah berhasil dibagikan!');
+                this.#view.showMessage('Story berhasil dibagikan!');
                 this.#view.clearNewStoryForm();
                 await this.loadStories(); // Muat ulang daftar cerita setelah berhasil
 
@@ -79,11 +79,11 @@ class HomePresenter {
                 }
 
             } else {
-                this.#view.showMessage(response.message || 'Gagal membagikan kisah.', true);
+                this.#view.showMessage(response.message || 'Gagal membagikan Story.', true);
             }
         } catch (error) {
             console.error('HomePresenter: Terjadi kesalahan saat menambahkan story:', error);
-            this.#view.showMessage('Terjadi kesalahan saat mencoba membagikan kisah.', true);
+            this.#view.showMessage('Terjadi kesalahan saat mencoba membagikan Story.', true);
         } finally {
             this.#view.hideLoadingNewStory();
         }

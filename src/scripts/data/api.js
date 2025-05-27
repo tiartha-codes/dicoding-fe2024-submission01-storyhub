@@ -51,22 +51,18 @@ export async function getLogin({ email, password }) {
 
 
 // Add a new story
-export async function addNewStory(description, photo, lat, lon) {
-    const formData = new FormData();
-    formData.append('description', description);
-    formData.append('photo', photo); // Pastikan ini adalah objek File langsung
-    if (lat) formData.append('lat', lat);
-    if (lon) formData.append('lon', lon);
-
+export async function addNewStory(formData) {
     const response = await fetch(ENDPOINTS.STORE_NEW_STORY, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${getAccessToken()}`,
+            // Jangan set Content-Type, biarkan browser mengatur boundary FormData
         },
-        body: formData,
+        body: formData
     });
     return await response.json();
 }
+
 // Add a new story as a guest
 export async function addNewStoryGuest(description, photo, lat, lon) {
   const formData = new FormData();

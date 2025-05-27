@@ -1,116 +1,205 @@
-/* new-story-page.css */
+/* new-story.css */
 
 .new-story-page {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #f0f2f5; /* Mirip background Facebook */
+    padding: 30px;
+    background-color: #f9f9f9;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .new-story-page > h1 {
-    color: #1877f2; /* Warna biru Facebook */
-    margin-bottom: 20px;
+    color: #202124;
+    margin-bottom: 30px;
     font-size: 2.2em;
-    font-weight: bold;
-}
-
-.form-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
+    font-weight: 400;
+    text-align: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold;
-    font-size: 0.9em;
+    margin-bottom: 10px;
+    color: #5f6368;
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group input[type="file"],
-.form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.form-group textarea,
+.new-story-page .form-group select { /* Menambahkan select di sini */
+    width: 100%; /* Lebar 100% untuk semua input dan select */
+    padding: 12px 18px;
+    border: 1px solid #d2d2d2;
+    border-radius: 6px;
     box-sizing: border-box;
-    font-size: 0.9em;
+    font-size: 1rem;
+    color: #202124;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="file"]:focus,
+.form-group textarea:focus,
+.new-story-page .form-group select:focus { /* Menambahkan select di sini */
+    border-color: #4285f4;
+    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
 }
 
 .form-group textarea {
-    min-height: 100px;
+    min-height: 150px;
 }
 
 .form-group .form-text {
     display: block;
-    margin-top: 5px;
-    color: #777;
-    font-size: 0.8em;
+    margin-top: 8px;
+    color: #757575;
+    font-size: 0.9rem;
 }
 
 .location-checkbox {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .location-checkbox input[type="checkbox"] {
-    margin-right: 10px;
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.location-checkbox label {
+    font-size: 1rem;
+    color: #202124;
+    font-weight: 400;
+    cursor: pointer;
 }
 
 .location-inputs {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+    width: 100%; /* Pastikan kontainer lokasi 100% */
+    max-width: 500px; /* Batasi lebar maksimum agar konsisten dengan form */
 }
+
 
 .location-inputs.hidden {
     display: none;
 }
 
+/* Peta */
+.map-container-new {
+    height: 250px;
+    width: 100%; /* Lebar 100% untuk peta */
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Kamera */
+.camera-input {
+    margin-top: 20px;
+    width: 100%; /* Pastikan kontainer kamera 100% */
+    max-width: 500px; /* Batasi lebar maksimum agar konsisten dengan form */
+}
+
+.camera-input.hidden {
+    display: none;
+}
+
+.camera-preview {
+    width: 100%; /* Preview kamera 100% */
+    height: 240px; /* Tinggi tetap atau atur sesuai rasio aspek video */
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #d2d2d2;
+    background-color: #000;
+    display: flex; /* Untuk menengahkan video jika dimensinya tidak pas */
+    justify-content: center;
+    align-items: center;
+}
+
+#camera-video {
+    display: block;
+    width: 100%; /* Video 100% dari parent .camera-preview */
+    height: 100%;
+    object-fit: cover; /* Memastikan video mengisi area tanpa distorsi */
+}
+
+#camera-canvas {
+    width: 100%; /* Canvas 100% */
+    height: auto; /* Tinggi otomatis sesuai rasio aspek */
+    display: none; /* Pastikan canvas tersembunyi */
+}
+
+/* Tombol */
 .btn {
-    background-color: #1877f2; /* Warna biru Facebook */
+    width: 100%; /* Semua tombol 100% */
+    padding: 10px; /* Padding 5px di semua sisi */
+    margin-top: 10px; /* Tambahkan margin atas untuk pemisahan */
+    margin-bottom: 10px; /* Tambahkan margin bawah jika perlu */
+    background-color: #4285f4;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
 .btn.primary:hover {
-    background-color: #166fe6;
+    background-color: #357ae8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.btn.secondary {
+    background-color: #f1f3f4;
+    color: #202124;
+    border: 1px solid #d2d2d2;
+}
+
+.btn.secondary:hover {
+    background-color: #e8eaed;
+}
+
+/* Pesan */
 .message-container {
-    margin-top: 15px;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 0.9em;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .message-container.success {
-    background-color: #e6ffe6;
-    color: #28a745;
-    border: 1px solid #c3e6cb;
+    background-color: #e6f4ea;
+    color: #1a73e8;
+    border: 1px solid #bfe3d2;
 }
 
 .message-container.error {
-    background-color: #ffe6e6;
-    color: #dc3545;
-    border: 1px solid #f5c6cb;
+    background-color: #fdecea;
+    color: #d93025;
+    border: 1px solid #f2b8b5;
 }

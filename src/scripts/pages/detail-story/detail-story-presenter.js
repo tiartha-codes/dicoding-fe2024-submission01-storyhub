@@ -24,11 +24,11 @@ class DetailStoryPresenter {
             if (!response.error) {
                 this.#view.showStoryDetail(response.story);
             } else {
-                this.#view.showError(response.message || 'Gagal memuat detail kisah.');
+                this.#view.showError(response.message || 'Gagal memuat detail Story.');
             }
         } catch (error) {
-            console.error('DetailStoryPresenter: Terjadi kesalahan saat memuat detail kisah:', error);
-            this.#view.showError('Terjadi kesalahan saat memuat detail kisah.');
+            console.error('DetailStoryPresenter: Terjadi kesalahan saat memuat detail Story:', error);
+            this.#view.showError('Terjadi kesalahan saat memuat detail Story.');
         }
     }
 }

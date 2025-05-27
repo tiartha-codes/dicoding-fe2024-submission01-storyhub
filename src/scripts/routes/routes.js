@@ -12,7 +12,7 @@ const routes = {
     '/register': () => checkUnauthenticatedRouteOnly(new RegisterPage()),
     '/': () => checkAuthenticatedRoute(new HomePage()),
     '/about': () => checkUnauthenticatedRouteOnly(new AboutPage()),
-    '/new-story': () => checkAuthenticatedRoute(new NewStoryPage()),
+    '/new': () => checkAuthenticatedRoute(new NewStoryPage()),
     '/detail/:id': () => checkAuthenticatedRoute(new DetailStoryPage()), // Tambahkan rute detail dengan parameter ID
 };
 

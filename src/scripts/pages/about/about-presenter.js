@@ -12,9 +12,9 @@ class AboutPresenter {
             // atau mungkin dari API endpoint khusus (jika ada).
             // Untuk contoh sederhana ini, kita akan langsung memberikan deskripsi.
             const aboutDescription = `
-                Story Hub adalah platform inovatif yang memungkinkan pengguna untuk berbagi dan menjelajahi berbagai kisah menarik dari seluruh dunia. <br> 
+                Story Hub adalah platform inovatif yang memungkinkan pengguna untuk berbagi dan menjelajahi berbagai Story menarik dari seluruh dunia. <br> 
                 Misi kami adalah untuk menghubungkan orang-orang melalui narasi yang kuat dan beragam, menciptakan ruang di mana setiap cerita memiliki kesempatan untuk didengar. <br> 
-                Dengan antarmuka yang sederhana dan intuitif, Anda dapat dengan mudah mengunggah kisah Anda sendiri, berinteraksi dengan cerita orang lain, dan menemukan konten baru yang akan menginspirasi dan menghibur Anda.<br>
+                Dengan antarmuka yang sederhana dan intuitif, Anda dapat dengan mudah mengunggah Story Anda sendiri, berinteraksi dengan cerita orang lain, dan menemukan konten baru yang akan menginspirasi dan menghibur Anda.<br>
                 Kami berkomitmen untuk terus mengembangkan Story Hub dengan fitur-fitur baru dan menarik, serta menjaga komunitas yang positif dan suportif bagi semua pengguna.
             `;
 

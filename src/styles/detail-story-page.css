@@ -22,8 +22,14 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 90%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.story-detail {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .story-detail img {
@@ -37,6 +43,8 @@
 
 .story-detail .story-info {
     padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .story-detail .story-info h3 {
@@ -52,16 +60,47 @@
     margin-bottom: 10px;
     font-size: 1em;
     line-height: 1.6;
+    text-align: justify;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+.story-detail .story-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .story-detail .story-date,
 .story-detail .story-location {
     color: #999;
     font-size: 0.9em;
-    margin-bottom: 5px;
+    margin-bottom: 0;
+    margin-right: 8px;
+}
+
+.story-detail .story-location-group {
+    margin-top: 10px;
+    font-size: 0.98em;
+    color: #999;
+    line-height: 1.5;
+}
+
+.story-detail .story-location-label {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.story-detail .story-location-value {
+    margin-right: 12px;
 }
 
 .btn.secondary {
+    width: 100%;
+    max-width: 800px;
     background-color: #ddd;
     color: #333;
     padding: 10px 15px;

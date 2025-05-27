@@ -1,57 +1,23 @@
 import HomePresenter from './home-presenter.js';
 import * as StoryHubAPI from '../../data/api.js';
 import { getAccessToken } from '../../utils/util-auth.js';
+import L from 'leaflet'; // Import Leaflet
+import 'leaflet/dist/leaflet.css'; // Import Leaflet CSS
+import { MAP_API_KEY } from '../../config'; // Asumsi API key ada di config
 
 class HomePage {
     #presenter = null;
     #storyListContainer = null;
-    #newStoryFormContainer = null;
-    #descriptionInput = null;
-    #photoInput = null;
-    #locationCheckbox = null;
-    #latInput = null;
-    #lonInput = null;
-    #submitButton = null;
-    #messageContainer = null;
+    #mapContainer = null; // Container untuk peta
+    #map = null;
 
     async render() {
         return `
             <section class="home-page">
-               
-                <div class="new-story-form-container">
-                    <h2>Bagikan Kisah Baru</h2>
-                    <div class="form-group">
-                        <label for="description">Deskripsi:</label>
-                        <textarea id="description" placeholder="Tuliskan kisah Anda di sini..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="photo">Foto:</label>
-                        <input type="file" id="photo" accept="image/jpeg, image/jpg, image/png">
-                        <small class="form-text">Format: JPG, JPEG, PNG. Ukuran maksimal 1MB.</small>
-                    </div>
-                    <div class="form-group location-checkbox">
-                        <input type="checkbox" id="location">
-                        <label for="location">Tambahkan Lokasi (Opsional)</label>
-                    </div>
-                    <div class="location-inputs hidden">
-                        <div class="form-group">
-                            <label for="latitude">Latitude:</label>
-                            <input type="number" id="latitude" placeholder="Contoh: -6.2088">
-                        </div>
-                        <div class="form-group">
-                            <label for="longitude">Longitude:</label>
-                            <input type="number" id="longitude" placeholder="Contoh: 106.8456">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button id="submit-new-story" class="btn primary">Bagikan</button>
-                        <div id="message-container" class="message-container"></div>
-                    </div>
-                </div>
-
-                <h1>Kisah Terbaru</h1>
+                <div id="map-container" class="map-container"></div>
+                <h1>Story Terbaru</h1>
                 <div id="story-list-container" class="story-list">
-                    <p>Memuat kisah terbaru...</p>
+                    <p>Memuat story terbaru...</p>
                 </div>
             </section>
         `;
@@ -59,72 +25,29 @@ class HomePage {
 
     async afterRender() {
         this.#storyListContainer = document.getElementById('story-list-container');
-        this.#newStoryFormContainer = document.querySelector('.new-story-form-container');
-        this.#descriptionInput = document.getElementById('description');
-        this.#photoInput = document.getElementById('photo');
-        this.#locationCheckbox = document.getElementById('location');
-        this.#latInput = document.getElementById('latitude');
-        this.#lonInput = document.getElementById('longitude');
-        this.#submitButton = document.getElementById('submit-new-story');
-        this.#messageContainer = document.getElementById('message-container');
-
+        this.#mapContainer = document.getElementById('map-container');
         this.#presenter = new HomePresenter({
             view: this,
             model: StoryHubAPI,
             authModel: { getAccessToken },
         });
 
-        this.#locationCheckbox.addEventListener('change', this.#toggleLocationInputs);
-        this.#submitButton.addEventListener('click', this.#submitNewStory);
-
         await this.#presenter.loadStories();
     }
 
-    #toggleLocationInputs = () => {
-        const locationInputs = document.querySelector('.location-inputs');
-        locationInputs.classList.toggle('hidden');
-    };
-
-    #submitNewStory = async () => {
-        if (!this.#descriptionInput.value.trim()) {
-            this.showMessage('Deskripsi tidak boleh kosong.', true);
-            return;
-        }
-
-        const file = this.#photoInput.files[0];
-        if (!file) {
-            this.showMessage('Foto harus diunggah.', true);
-            return;
-        }
-
-        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-        if (!allowedTypes.includes(file.type)) {
-            this.showMessage('Format foto yang didukung adalah JPG, JPEG, dan PNG.', true);
-            return;
-        }
-
-        if (file.size > 1 * 1024 * 1024) {
-            this.showMessage('Ukuran foto maksimal 1MB.', true);
-            return;
-        }
-
-        const data = {
-            description: this.#descriptionInput.value,
-            photo: file,
-            lat: this.#locationCheckbox.checked ? parseFloat(this.#latInput.value) || null : null,
-            lon: this.#locationCheckbox.checked ? parseFloat(this.#lonInput.value) || null : null,
-        };
-
-        await this.#presenter.addNewStory(data); // Panggil fungsi addNewStory di presenter
-    };
-
     showStories(stories) {
         if (!stories || stories.length === 0) {
-            this.#storyListContainer.innerHTML = '<p>Belum ada kisah terbaru.</p>';
+            this.#storyListContainer.innerHTML = '<p>Belum ada story terbaru.</p>';
+            if (this.#map) {
+                this.#map.remove();
+                this.#map = null;
+            }
             return;
         }
 
         this.#storyListContainer.innerHTML = '';
+        this.#renderMap(stories); // Render peta dengan lokasi stories
+
         stories.forEach(story => {
             const storyItem = document.createElement('div');
             storyItem.classList.add('story-item');
@@ -139,44 +62,43 @@ class HomePage {
             storyItem.addEventListener('click', () => {
                 window.location.hash = `/detail/${story.id}`;
             });
-            storyItem.style.cursor = 'pointer'; // Tambahkan cursor pointer untuk indikasi bisa diklik
+            storyItem.style.cursor = 'pointer';
             this.#storyListContainer.appendChild(storyItem);
         });
     }
 
+    #renderMap(stories) {
+        if (!this.#mapContainer) return;
+
+        if (!this.#map) {
+            this.#map = L.map(this.#mapContainer).setView([-2.5489, 118.0149], 5); // Set initial view ke Indonesia
+            L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.#map);
+        } else {
+            this.#map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    this.#map.removeLayer(layer);
+                }
+            });
+        }
+
+        stories.forEach(story => {
+            if (story.lat !== null && story.lon !== null) {
+                const marker = L.marker([story.lat, story.lon]).addTo(this.#map);
+                marker.bindPopup(`<b>${story.name}</b><br>${story.description}`);
+            }
+        });
+    }
 
     showLoadingStories() {
-        this.#storyListContainer.innerHTML = '<p>Memuat kisah terbaru...</p>';
+        this.#storyListContainer.innerHTML = '<p>Memuat Story terbaru...</p>';
+        if (this.#mapContainer) this.#mapContainer.innerHTML = '<p>Memuat peta...</p>';
     }
 
     showErrorStories(message) {
-        this.#storyListContainer.innerHTML = `<p class="error-message">Terjadi kesalahan memuat kisah: ${message}</p>`;
-    }
-
-    showMessage(message, isError = false) {
-        this.#messageContainer.textContent = message;
-        this.#messageContainer.className = `message-container ${isError ? 'error' : 'success'}`;
-    }
-
-    clearNewStoryForm() {
-        this.#descriptionInput.value = '';
-        this.#photoInput.value = '';
-        this.#locationCheckbox.checked = false;
-        document.querySelector('.location-inputs').classList.add('hidden');
-        this.#latInput.value = '';
-        this.#lonInput.value = '';
-        this.#messageContainer.textContent = '';
-        this.#messageContainer.className = 'message-container';
-    }
-
-    showLoadingNewStory() {
-        this.#submitButton.textContent = 'Mengunggah...';
-        this.#submitButton.disabled = true;
-    }
-
-    hideLoadingNewStory() {
-        this.#submitButton.textContent = 'Bagikan';
-        this.#submitButton.disabled = false;
+        this.#storyListContainer.innerHTML = `<p class="error-message">Terjadi kesalahan memuat Story: ${message}</p>`;
+        if (this.#mapContainer) this.#mapContainer.innerHTML = `<p class="error-message">Terjadi kesalahan memuat peta.</p>`;
     }
 }
 
